@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="60">
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/galleryImageView"
@@ -30,14 +30,15 @@
                 android:layout_height="100dp"
                 android:id="@+id/progressBar"
                 android:layout_centerInParent="true"/>
-        </RelativeLayout>
 
+
+        </RelativeLayout>
         <GridView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="40"
             android:id="@+id/gridView"
-            android:numColumns="5"
+            android:numColumns="4"
             android:verticalSpacing="1dp"
             android:horizontalSpacing="1dp"
             android:stretchMode="none"

@@ -3,6 +3,7 @@ package com.example.android.tabswithswipes;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.android.tabswithswipes.Utils.GridImageAdapter;
 import com.example.android.tabswithswipes.Utils.UniversalImageLoader;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class GalleryFragment extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_gallery);
-        galleryImage = (ImageView)findViewById(R.id.galleryImageView);
+        galleryImage = (SimpleDraweeView)findViewById(R.id.galleryImageView);
         gridView = (GridView)findViewById(R.id.gridView);
         directorySpinner = (Spinner)findViewById(R.id.spinnerDirectory);
         mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
@@ -56,6 +58,8 @@ public class GalleryFragment extends Activity {
 
             }
         });
+        Uri uri = Uri.parse("https://www.gstatic.com/webp/gallery/4.sm.jpg");
+        galleryImage.setImageURI(uri);
         tempGridSetup();
     }
     private void setUpImageGrid(ArrayList<String> imgURLs){
@@ -63,7 +67,6 @@ public class GalleryFragment extends Activity {
         GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview,"", imgURLs);
         gridView.setAdapter(adapter);
     }
-
     private void tempGridSetup(){
         ArrayList<String> imgURLs = new ArrayList<>();
         imgURLs.add("https://www.gstatic.com/webp/gallery/4.sm.jpg");
@@ -74,9 +77,6 @@ public class GalleryFragment extends Activity {
         imgURLs.add("https://www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge_wm_brw/public/article_images/2018/03/android-p-virtual-notch.jpg?itok=EnKJzDgF");
         imgURLs.add("https://www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge_wm_brw/public/article_images/2018/03/samsung-galaxy-s9-plus-black-4.jpg?itok=bTitZlS_");
         imgURLs.add("https://www.extremetech.com/wp-content/uploads/2017/03/smiling-android.jpg");
-        imgURLs.add("https://rimblogs.files.wordpress.com/2016/04/marshmallowman.png?w=800");
-        imgURLs.add("https://www.androidcentral.com/sites/androidcentral.com/files/topic_images/2015/android-apps-topic.png");
-        imgURLs.add("https://images.idgesg.net/images/article/2017/11/android-security-100741557-large.jpg");
 
         setUpImageGrid(imgURLs);
     }

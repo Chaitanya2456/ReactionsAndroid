@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.android.tabswithswipes.R;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -32,16 +34,15 @@ public class GridImageAdapter extends ArrayAdapter<String>{
 
     public GridImageAdapter(Context context, int layoutResource, String append, ArrayList<String> imgURLs) {
         super(context, layoutResource, imgURLs);
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mContext = context;
+        this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mContext = context;
         this.layoutResource = layoutResource;
-        mAppend = append;
+        this.mAppend = append;
         this.imgURLs = imgURLs;
     }
 
     private static class ViewHolder{
-        ImageView image;
-        ProgressBar mProgressBar;
+        SimpleDraweeView image;
     }
 
     @NonNull
@@ -55,48 +56,16 @@ public class GridImageAdapter extends ArrayAdapter<String>{
         if(convertView == null){
             convertView = mInflater.inflate(layoutResource, parent, false);
             holder = new ViewHolder();
-            holder.mProgressBar = (ProgressBar) convertView.findViewById(R.id.gridImageProgressBar);
-            holder.image = (ImageView) convertView.findViewById(R.id.gridImageView);
+            holder.image = (SimpleDraweeView) convertView.findViewById(R.id.gridImageView);
 
             convertView.setTag(holder);
         }
         else{
             holder = (ViewHolder) convertView.getTag();
         }
-
+        convertView.setVisibility(View.VISIBLE);
         String imgURL = getItem(position);
-
-        ImageLoader imageLoader = ImageLoader.getInstance();
-
-        imageLoader.displayImage(mAppend + imgURL, holder.image, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                if(holder.mProgressBar != null){
-                    holder.mProgressBar.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                if(holder.mProgressBar != null){
-                    holder.mProgressBar.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if(holder.mProgressBar != null){
-                    holder.mProgressBar.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-                if(holder.mProgressBar != null){
-                    holder.mProgressBar.setVisibility(View.GONE);
-                }
-            }
-        });
+        Picasso.get().load(imgURL).into(holder.image);
 
         return convertView;
     }
