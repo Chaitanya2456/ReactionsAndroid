@@ -28,24 +28,6 @@ public class Tab3 extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab3, container, false);
-        userName = (TextView)v.findViewById(R.id.userName);
-        signOut = (Button)v.findViewById(R.id.signOut);
-        auth = FirebaseAuth.getInstance();
-        final SharedPreferences preferences = getActivity().getSharedPreferences("MyPref", 0);
-        if(preferences.contains("userName")){
-              userName.setText(preferences.getString("userName", "Tab3"));}
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Signed out", Toast.LENGTH_SHORT);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.commit();
-                auth.signOut();
-                startActivity(new Intent(getActivity(), loginActivity.class));
-                getActivity().finish();
-            }
-        });
         return v;
     }
 }

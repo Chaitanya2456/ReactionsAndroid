@@ -34,6 +34,23 @@
         android:backgroundTint="@color/white"/>
 
     <EditText
+        android:id="@+id/username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/user"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="User Name"
+        android:inputType="textCapWords"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="16sp"
+        android:backgroundTint="@color/white"/>
+
+    <EditText
         android:id="@+id/userEmailId"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

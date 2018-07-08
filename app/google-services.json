@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "450288333289",
-    "firebase_url": "https://reactions-4f81f.firebaseio.com",
-    "project_id": "reactions-4f81f",
-    "storage_bucket": "reactions-4f81f.appspot.com"
+    "project_number": "286141793998",
+    "firebase_url": "https://tabswithswipes.firebaseio.com",
+    "project_id": "tabswithswipes",
+    "storage_bucket": "tabswithswipes.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:450288333289:android:566507dd59fb0a40",
+        "mobilesdk_app_id": "1:286141793998:android:566507dd59fb0a40",
         "android_client_info": {
           "package_name": "com.example.android.tabswithswipes"
         }
       },
       "oauth_client": [
         {
-          "client_id": "450288333289-f90oljfihvsn57f4itcnu69501rb6elc.apps.googleusercontent.com",
+          "client_id": "286141793998-stbl48jihlqpb1345t7clp99sprmnqe2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.tabswithswipes",
+            "certificate_hash": "492d11a111cf569bde5477df2ad6e96cd9a4cd48"
+          }
+        },
+        {
+          "client_id": "286141793998-ba7ibjs5a7ga3tor9eauhlj47u3efsd9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA94N-bUQgiQygKws-ucdzsUApAKewUetY"
+          "current_key": "AIzaSyAQitxdFmrjWKmvDYfve167nSClJUDCuqs"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286141793998-ba7ibjs5a7ga3tor9eauhlj47u3efsd9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

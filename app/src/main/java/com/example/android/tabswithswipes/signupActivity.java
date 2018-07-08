@@ -1,21 +1,29 @@
 package com.example.android.tabswithswipes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.tabswithswipes.Utils.Models;
 import com.example.android.tabswithswipes.Utils.utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.nio.Buffer;
 import java.util.regex.Matcher;
@@ -23,11 +31,14 @@ import java.util.regex.Pattern;
 
 public class signupActivity extends AppCompatActivity {
 
-    private static EditText fullName, emailId, password, confirmPassword;
+    private static EditText fullName, username, emailId, password, confirmPassword;
     private static TextView login;
     private static Button signUpButton;
     private FirebaseAuth auth;
     private static TextView forgotPassword;
+    private FirebaseDatabase mFirebasedatabase;
+    private DatabaseReference myRef;
+    private int usernameexists = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +49,11 @@ public class signupActivity extends AppCompatActivity {
         confirmPassword = (EditText)findViewById(R.id.confirmPassword);
         signUpButton = (Button)findViewById(R.id.signUpBtn);
         login = (TextView)findViewById(R.id.already_user);
+        username = (EditText)findViewById(R.id.username);
         forgotPassword = (TextView)findViewById(R.id.forgotPassword);
         auth = FirebaseAuth.getInstance();
+        mFirebasedatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebasedatabase.getReference();
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,16 +80,12 @@ public class signupActivity extends AppCompatActivity {
     }
 
     private void checkValidation(){
+
         String getFullName = fullName.getText().toString();
-        String getEmailId = emailId.getText().toString();
+        final String getEmailId = emailId.getText().toString();
         String getPassword = password.getText().toString();
+        final String getusernamehere = username.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();
-        SharedPreferences preferences = getSharedPreferences("MyPref",0);
-        SharedPreferences.Editor editor = preferences.edit();
-        if(getFullName!=null){
-            editor.putString("userName", getFullName);
-            editor.commit();
-        }
 
         // Pattern match for email id
 
@@ -83,7 +93,8 @@ public class signupActivity extends AppCompatActivity {
                 || getEmailId.equals("") || getEmailId.length() == 0
                 || getPassword.equals("") || getPassword.length() == 0
                 || getConfirmPassword.equals("")
-                || getConfirmPassword.length() == 0){
+                || getConfirmPassword.length() == 0
+                || getusernamehere.length()==0){
             Toast.makeText(this,"All fields are required", Toast.LENGTH_SHORT).show();
         }else if(!emailValidator(getEmailId)){
             Toast.makeText(this,"Email id is invalid", Toast.LENGTH_SHORT).show();
@@ -93,6 +104,7 @@ public class signupActivity extends AppCompatActivity {
             Toast.makeText(this, "Password too short, enter minimum 6 characters", Toast.LENGTH_SHORT)
                     .show();
         }else{
+
             auth.createUserWithEmailAndPassword(getEmailId, getPassword)
                     .addOnCompleteListener(signupActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -101,6 +113,33 @@ public class signupActivity extends AppCompatActivity {
                             if(!task.isSuccessful()){
                                 Toast.makeText(signupActivity.this, "Authentication failed" + task.getException(), Toast.LENGTH_SHORT).show();
                             }else{
+                                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        Models user = new Models();
+                                        for(DataSnapshot ds: dataSnapshot.getChildren()){
+                                            Log.d("TAG",ds.toString());
+                                            user.setUsername(ds.getValue(Models.class).getUsername());
+                                            if(ds.getValue(Models.class).getUsername().equals(getusernamehere)){
+                                                usernameexists = 1;
+                                                break;
+                                            }
+
+                                        }
+                                        if(usernameexists == 0){
+                                            Models users = new Models(getEmailId,getusernamehere);
+                                            String UserID = auth.getCurrentUser().getUid();
+                                            myRef.child("users").child(UserID).setValue(users);
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                                //DataSnapshot dataSnapshot = null;
                                 startActivity(new Intent(signupActivity.this, MainActivity.class));
                                 finish();
                             }
