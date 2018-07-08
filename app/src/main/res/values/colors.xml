@@ -6,4 +6,8 @@
     <color name="colorImage">#ececec</color>
     <color name="colorAppBar">#efebe9</color>
     <color name="black">#FF000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_greyish">#EEEEEE</color>
+    <color name="button_selectorcolor">#9E9E9E</color>
+    <color name="background_color">#009688</color>
 </resources>
