@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class signupActivity extends AppCompatActivity {
 
-    private static EditText fullName, emailId, password, confirmPassword;
+    private static EditText fullName, emailId, password, username, confirmPassword;
     private static TextView login;
     private static Button signUpButton;
     private FirebaseAuth auth;
@@ -34,6 +35,7 @@ public class signupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         fullName = (EditText)findViewById(R.id.fullName);
         emailId = (EditText)findViewById(R.id.userEmailId);
+        username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         confirmPassword = (EditText)findViewById(R.id.confirmPassword);
         signUpButton = (Button)findViewById(R.id.signUpBtn);
@@ -66,9 +68,10 @@ public class signupActivity extends AppCompatActivity {
     }
 
     private void checkValidation(){
-        String getFullName = fullName.getText().toString();
-        String getEmailId = emailId.getText().toString();
+        final String getFullName = fullName.getText().toString();
+        final String getEmailId = emailId.getText().toString();
         String getPassword = password.getText().toString();
+        final String getusername = username.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();
         SharedPreferences preferences = getSharedPreferences("MyPref",0);
         SharedPreferences.Editor editor = preferences.edit();
@@ -83,6 +86,7 @@ public class signupActivity extends AppCompatActivity {
                 || getEmailId.equals("") || getEmailId.length() == 0
                 || getPassword.equals("") || getPassword.length() == 0
                 || getConfirmPassword.equals("")
+                || getusername.equals("")
                 || getConfirmPassword.length() == 0){
             Toast.makeText(this,"All fields are required", Toast.LENGTH_SHORT).show();
         }else if(!emailValidator(getEmailId)){
@@ -92,7 +96,11 @@ public class signupActivity extends AppCompatActivity {
         }else if(getPassword.length()<6){
             Toast.makeText(this, "Password too short, enter minimum 6 characters", Toast.LENGTH_SHORT)
                     .show();
-        }else{
+        }else if(!FireBaseMethods.CheckForUsernameInDataBase(getusername)){
+              Toast.makeText(signupActivity.this, "This userName is already taken", Toast.LENGTH_SHORT).show();
+              FireBaseMethods.reinit();
+        }
+        else{
             auth.createUserWithEmailAndPassword(getEmailId, getPassword)
                     .addOnCompleteListener(signupActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -101,8 +109,9 @@ public class signupActivity extends AppCompatActivity {
                             if(!task.isSuccessful()){
                                 Toast.makeText(signupActivity.this, "Authentication failed" + task.getException(), Toast.LENGTH_SHORT).show();
                             }else{
+                                FireBaseMethods.insertInDataBase(getEmailId,getusername,getFullName);
+                                Log.d("tagfors", "wg");
                                 startActivity(new Intent(signupActivity.this, MainActivity.class));
-                                finish();
                             }
                         }
                     });
