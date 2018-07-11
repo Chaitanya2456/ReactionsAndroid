@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 public class EditProfileActivity extends AppCompatActivity {
 
     private static EditText editName, editBio;

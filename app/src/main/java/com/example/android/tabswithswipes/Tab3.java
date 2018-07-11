@@ -53,6 +53,10 @@ public class Tab3 extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         auth.signOut();
+                        SharedPreferences preferences = getActivity().getSharedPreferences("MyPref", 0);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+                        editor.commit();
                         startActivity(new Intent(getActivity(), loginActivity.class));
                         getActivity().finish();
                     }

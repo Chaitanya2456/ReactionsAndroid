@@ -112,6 +112,7 @@ public class signupActivity extends AppCompatActivity {
                                 FireBaseMethods.insertInDataBase(getEmailId,getusername,getFullName);
                                 Log.d("tagfors", "wg");
                                 startActivity(new Intent(signupActivity.this, MainActivity.class));
+                                finish();
                             }
                         }
                     });

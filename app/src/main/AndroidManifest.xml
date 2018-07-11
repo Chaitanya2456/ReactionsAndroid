@@ -18,18 +18,26 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".GalleryFragment" />
-        <activity android:name=".loginActivity">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".GalleryFragment"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".loginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".signupActivity" />
-        <activity android:name=".resetPassword" />
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".signupActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".resetPassword"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EditProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CreatePoll"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

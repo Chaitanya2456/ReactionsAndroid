@@ -1,55 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="100">
-    <RelativeLayout
+    android:layout_height="match_parent">
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="70">
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/tab2DraweeView"
+        android:layout_height="wrap_content"
+        android:id="@+id/header_text"
+        android:text="CHOOSE THE TYPE OF POST"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black"
+        android:layout_below="@+id/header_text"
+        android:id="@+id/margin_post"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:roundingBorderWidth="5dp"
-        app:roundingBorderColor="@color/colorImage"
-        app:placeholderImage="@drawable/image_placeholder"/>
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="30"
-        android:weightSum="100"
-        android:orientation="horizontal">
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_weight="50"
-            android:layout_height="match_parent">
-        <Button
-            android:id="@+id/editBtnTab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_shape"
-            android:text="edit"
-            android:textColor="#FFFFFFFF" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_weight="50"
-            android:layout_height="match_parent">
-        <Button
-            android:id="@+id/uploadBtnTab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_shape"
-            android:text="Choose"
-            android:textColor="#FFFFFFFF" />
-        </RelativeLayout>
-    </LinearLayout>
-</LinearLayout>
+        android:id="@+id/shareRecyclerView"
+        android:layout_below="@+id/margin_post"
+        android:scrollbars="vertical"
+        android:clipToPadding="false"/>
+
+</RelativeLayout>
